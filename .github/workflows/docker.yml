@@ -6,7 +6,9 @@ on:
     branches:
       - master
       - dev
-      - dev_eco
+      - eco/*
+      - feature/*
+      - fix/*
 #    tags:
 #      - v3.*
   release:
