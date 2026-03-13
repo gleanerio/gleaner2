@@ -1,4 +1,4 @@
-package graph
+package sparql
 
 import (
 	"bytes"

@@ -1,4 +1,4 @@
-package objects
+package storage
 
 import (
 	"context"

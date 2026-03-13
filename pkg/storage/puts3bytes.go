@@ -1,4 +1,4 @@
-package objects
+package storage
 
 import (
 	"bytes"
@@ -8,7 +8,7 @@ import (
 )
 
 // PutS3Bytes is used write an object
-func putS3Bytes(mc *minio.Client, bucketName, objectName, mimeType string, object []byte) (int, error) {
+func PutS3Bytes(mc *minio.Client, bucketName, objectName, mimeType string, object []byte) (int, error) {
 	usermeta := make(map[string]string) // what do I want to know?
 	usermeta["url"] = "urlloc"
 	usermeta["sha1"] = "bss"
