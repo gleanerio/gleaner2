@@ -27,6 +27,11 @@ var SummonerTemplate = map[string]interface{}{
 	},
 }
 
+// ReadSummmonerConfig is the legacy name (triple 'm') preserved for compatibility
+func ReadSummmonerConfig(viperSubtree *viper.Viper) (Summoner, error) {
+	return ReadSummonerConfig(viperSubtree)
+}
+
 func ReadSummonerConfig(viperSubtree *viper.Viper) (Summoner, error) {
 	var summoner Summoner
 	for key, value := range SummonerTemplate {

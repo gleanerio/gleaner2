@@ -19,6 +19,36 @@ const (
 	FileSha                  = "filesha"
 )
 
+// ContextOption represents context handling modes for JSON-LD processing
+type ContextOption int64
+
+const (
+	Strict ContextOption = iota
+	Https
+	Http
+	StandardizedHttps
+	StandardizedHttp
+)
+
+// AccceptContentType is the default accept content type for HTTP requests (note: legacy spelling preserved)
+const AccceptContentType string = "application/ld+json, text/html"
+
+func (s ContextOption) String() string {
+	switch s {
+	case Strict:
+		return "strict"
+	case Https:
+		return "https"
+	case Http:
+		return "http"
+	case StandardizedHttps:
+		return "standardizedHttps"
+	case StandardizedHttp:
+		return "standardizedHttp"
+	}
+	return "unknown"
+}
+
 // Sources holds configuration for a data source (website, API, etc.)
 // Originally from Gleaner's internal/config/sources.go
 type Sources struct {
@@ -35,14 +65,14 @@ type Sources struct {
 	CredentialsFile string                 // do not want someone's google api key exposed
 	Other           map[string]interface{} `mapstructure:",remain"`
 
-	HeadlessWait      int    // if loading is slow, wait
-	Delay             int64  // A domain-specific crawl delay value
-	IdentifierPath    string // JSON Path to the identifier
+	HeadlessWait      int           // if loading is slow, wait
+	Delay             int64         // A domain-specific crawl delay value
+	IdentifierPath    string        // JSON Path to the identifier
 	ApiPageLimit      int
 	IdentifierType    string
-	FixContextOption  string // context handling: strict, https, http
-	AcceptContentType string `default:"application/ld+json, text/html"`
-	JsonProfile       string // jsonprofile
+	FixContextOption  ContextOption // context handling mode
+	AcceptContentType string        `default:"application/ld+json, text/html"`
+	JsonProfile       string        // jsonprofile
 }
 
 // SourcesConfig holds the full sources configuration used by both
@@ -166,6 +196,78 @@ func populateSourceDefaults(s Sources) Sources {
 	}
 	s.URL = strings.TrimSpace(s.URL)
 	return s
+}
+
+// GetSourceByType returns sources matching a specific source type
+func GetSourceByType(sources []Sources, key string) []Sources {
+	var sourcesSlice []Sources
+	for _, s := range sources {
+		if s.SourceType == key {
+			sourcesSlice = append(sourcesSlice, s)
+		}
+	}
+	return sourcesSlice
+}
+
+// GetActiveSourceByType returns active sources matching a specific source type
+func GetActiveSourceByType(sources []Sources, key string) []Sources {
+	var sourcesSlice []Sources
+	for _, s := range sources {
+		if s.SourceType == key && s.Active {
+			sourcesSlice = append(sourcesSlice, s)
+		}
+	}
+	return sourcesSlice
+}
+
+// GetActiveSourceByHeadless returns active sources filtered by headless setting
+func GetActiveSourceByHeadless(sources []Sources, headless bool) []Sources {
+	var sourcesSlice []Sources
+	for _, s := range sources {
+		if s.Headless == headless && s.Active {
+			sourcesSlice = append(sourcesSlice, s)
+		}
+	}
+	return sourcesSlice
+}
+
+// GetSourceByName returns a specific source by name
+func GetSourceByName(sources []Sources, name string) (*Sources, error) {
+	for i := 0; i < len(sources); i++ {
+		if sources[i].Name == name {
+			return &sources[i], nil
+		}
+	}
+	return nil, fmt.Errorf("unable to find a source with name %s", name)
+}
+
+// PruneSources filters sources to only include those in the useSources list
+func PruneSources(v1 *viper.Viper, useSources []string) (*viper.Viper, error) {
+	var finalSources []Sources
+	allSources, err := GetSources(v1)
+	if err != nil {
+		log.Fatal("error retrieving sources: ", err)
+	}
+	for _, s := range allSources {
+		if containsString(useSources, s.Name) {
+			s.Active = true
+			finalSources = append(finalSources, s)
+		}
+	}
+	if len(finalSources) > 0 {
+		v1.Set("sources", finalSources)
+		return v1, err
+	}
+	return v1, fmt.Errorf("cannot find a source with the given names")
+}
+
+func containsString(s []string, str string) bool {
+	for _, v := range s {
+		if v == str {
+			return true
+		}
+	}
+	return false
 }
 
 // SourceToNabuPrefix converts sources to the object prefix paths used for summoned/milled data
