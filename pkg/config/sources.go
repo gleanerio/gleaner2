@@ -9,6 +9,16 @@ import (
 	"strings"
 )
 
+// Identifier type constants
+const (
+	IdentifierSha     string = "identifiersha"
+	JsonSha                  = "jsonsha"
+	NormalizedJsonSha        = "normalizedjsonsha"
+	IdentifierString         = "identifierstring"
+	SourceUrl                = "sourceurl"
+	FileSha                  = "filesha"
+)
+
 // Sources holds configuration for a data source (website, API, etc.)
 // Originally from Gleaner's internal/config/sources.go
 type Sources struct {
