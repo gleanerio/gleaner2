@@ -3,7 +3,7 @@ package pkg
 import (
 	"fmt"
 	"github.com/gleanerio/nabu/internal/common"
-	"github.com/gleanerio/nabu/internal/objects"
+	"github.com/gleanerio/nabu/pkg/storage"
 	"github.com/gleanerio/nabu/internal/services/bulk"
 //	"github.com/gleanerio/nabu/pkg/config"
 	log "github.com/sirupsen/logrus"
@@ -36,7 +36,7 @@ func Object(v1 *viper.Viper, mc *minio.Client, bucket string, object string) err
 // cannot pass a nabu config to the gleaner code to create a minio client, and have it work
 func NabuObject(v1 *viper.Viper, bucket string, object string) error {
 	common.InitLogging()
-	mc, err := objects.MinioConnection(v1)
+	mc, err := storage.MinioConnection(v1)
 	if err != nil {
 		log.Fatal("cannot connect to minio: %s", err)
 	}

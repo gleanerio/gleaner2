@@ -9,9 +9,9 @@ import (
 
 	"github.com/gleanerio/nabu/pkg/config"
 
-	"github.com/gleanerio/nabu/internal/graph"
+	"github.com/gleanerio/nabu/pkg/graph"
 
-	"github.com/gleanerio/nabu/internal/objects"
+	"github.com/gleanerio/nabu/pkg/storage"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 
@@ -41,7 +41,7 @@ func BulkLoad(v1 *viper.Viper, mc *minio.Client, bucketName string, item string)
 
 	log.Printf("Object %s:%s for %s with method %s type %s", bucketName, item, ep, md, ct)
 
-	b, _, err := objects.GetS3Bytes(mc, bucketName, item)
+	b, _, err := storage.GetS3Bytes(mc, bucketName, item)
 	if err != nil {
 		return "", err
 	}

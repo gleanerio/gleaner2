@@ -14,7 +14,7 @@ import (
 	"time"
 	"unicode/utf8"
 
-	"github.com/gleanerio/nabu/internal/graph"
+	"github.com/gleanerio/nabu/pkg/graph"
 	log "github.com/sirupsen/logrus"
 
 	"github.com/minio/minio-go/v7"

@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/gleanerio/nabu/internal/objects"
+	"github.com/gleanerio/nabu/pkg/storage"
 	"github.com/gleanerio/nabu/pkg/config"
 	"github.com/spf13/viper"
 
@@ -65,7 +66,7 @@ func BulkRelease(v1 *viper.Viper, mc *minio.Client) error {
 		// TODO  review the issue of archive and latest being hard coded.
 		name := fmt.Sprintf("%s/%s/%s_%s_release.nq", "graphs/archive", srcname, baseName(path.Base(spj)), t.Format(layout))
 		latest_fullpath := fmt.Sprintf("%s/%s", "graphs/latest", name_latest)
-		err = objects.Copy(v1, mc, bucketName, latest_fullpath, bucketName, strings.Replace(name, "latest", "archive", 1))
+		err = storage.Copy(v1, mc, bucketName, latest_fullpath, bucketName, strings.Replace(name, "latest", "archive", 1))
 	}
 
 	return err

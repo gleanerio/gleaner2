@@ -3,7 +3,9 @@ package prune
 import (
 	"fmt"
 
-	"github.com/gleanerio/nabu/internal/graph"
+	"github.com/gleanerio/nabu/internal/sparql"
+	"github.com/gleanerio/nabu/pkg/graph"
+	"github.com/gleanerio/nabu/pkg/storage"
 	"github.com/gleanerio/nabu/internal/objects"
 	"github.com/gleanerio/nabu/pkg/config"
 	"github.com/minio/minio-go/v7"
@@ -26,7 +28,7 @@ func Snip(v1 *viper.Viper, mc *minio.Client) error {
 
 	for p := range pa {
 		// collect the objects associated with the source
-		oa, err := objects.ObjectList(v1, mc, pa[p])
+		oa, err := storage.ObjectList(v1, mc, pa[p])
 		if err != nil {
 			log.Error(err)
 			return err
@@ -77,7 +79,7 @@ func Snip(v1 *viper.Viper, mc *minio.Client) error {
 			bar := progressbar.Default(int64(len(d)))
 			for x := range d {
 				log.Infof("Removed graph: %s\n", d[x])
-				_, err = graph.Drop(v1, d[x])
+				_, err = sparql.Drop(v1, d[x])
 				if err != nil {
 					log.Error("Progress bar update issue: %v\n", err)
 				}

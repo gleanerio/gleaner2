@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/gleanerio/nabu/internal/objects"
+	"github.com/gleanerio/nabu/pkg/storage"
 	"github.com/gleanerio/nabu/pkg/config"
 	"github.com/meilisearch/meilisearch-go"
 	log "github.com/sirupsen/logrus"
@@ -75,7 +75,7 @@ func getEnv(key string) string {
 
 func docfunc(v1 *viper.Viper, mc *minio.Client, msc *meilisearch.Client, bucketName string, item string, endpoint string) ([]byte, error) {
 	// get item
-	b, _, err := objects.GetS3Bytes(mc, bucketName, item)
+	b, _, err := storage.GetS3Bytes(mc, bucketName, item)
 	if err != nil {
 		return nil, err
 	}

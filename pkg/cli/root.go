@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 
 	"github.com/gleanerio/nabu/internal/common"
-	"github.com/gleanerio/nabu/internal/objects"
+	"github.com/gleanerio/nabu/pkg/storage"
 	"github.com/gleanerio/nabu/pkg/config"
 	"github.com/minio/minio-go/v7"
 	log "github.com/sirupsen/logrus"
@@ -131,7 +131,7 @@ func initConfig() {
 
 	// If a config file is found, read it in.
 
-	mc, err = objects.MinioConnection(viperVal)
+	mc, err = storage.MinioConnection(viperVal)
 	if err != nil {
 		log.Fatal("cannot connect to minio: %s", err)
 	}

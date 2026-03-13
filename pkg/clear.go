@@ -2,8 +2,8 @@ package pkg
 
 import (
 	"github.com/gleanerio/nabu/internal/common"
-	"github.com/gleanerio/nabu/internal/graph"
-	"github.com/gleanerio/nabu/internal/objects"
+	"github.com/gleanerio/nabu/internal/sparql"
+	"github.com/gleanerio/nabu/pkg/storage"
 	"github.com/minio/minio-go/v7"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -16,7 +16,7 @@ func Clear(v1 *viper.Viper, mc *minio.Client) error {
 
 	if d {
 		log.Println("dangerous mode is enabled")
-		_, err := graph.Clear(v1)
+		_, err := sparql.Clear(v1)
 		if err != nil {
 			log.Error(err)
 			return err
@@ -33,7 +33,7 @@ func Clear(v1 *viper.Viper, mc *minio.Client) error {
 // cannot pass a nabu config to the gleaner code to create a minio client, and have it work
 func NabuClear(v1 *viper.Viper) error {
 	common.InitLogging()
-	mc, err := objects.MinioConnection(v1)
+	mc, err := storage.MinioConnection(v1)
 	if err != nil {
 		log.Fatal("cannot connect to minio: %s", err)
 	}

@@ -5,7 +5,7 @@ import (
 	"github.com/gleanerio/nabu/internal/services/bulk"
 	log "github.com/sirupsen/logrus"
 
-	"github.com/gleanerio/nabu/internal/objects"
+	"github.com/gleanerio/nabu/pkg/storage"
 	"github.com/spf13/viper"
 
 	"github.com/minio/minio-go/v7"
@@ -25,7 +25,7 @@ func GraphDB(v1 *viper.Viper, mc *minio.Client) error {
 // cannot pass a nabu config to the gleaner code to create a minio client, and have it work
 func NabuGraphDB(v1 *viper.Viper) error {
 	common.InitLogging()
-	mc, err := objects.MinioConnection(v1)
+	mc, err := storage.MinioConnection(v1)
 	if err != nil {
 		log.Fatal("cannot connect to minio: %s", err)
 	}

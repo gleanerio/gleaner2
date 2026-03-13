@@ -9,7 +9,9 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
-	"github.com/gleanerio/nabu/internal/graph"
+	"github.com/gleanerio/nabu/internal/sparql"
+	"github.com/gleanerio/nabu/pkg/graph"
+	"github.com/gleanerio/nabu/pkg/storage"
 	"github.com/minio/minio-go/v7"
 	"github.com/spf13/viper"
 )
@@ -36,7 +38,7 @@ func PipeLoad(v1 *viper.Viper, mc *minio.Client, bucket, object, spql string) ([
 	//return nil, nil // our graph is loaded already..
 	//}
 
-	b, _, err := GetS3Bytes(mc, bucket, object)
+	b, _, err := storage.GetS3Bytes(mc, bucket, object)
 	if err != nil {
 		log.Error("gets3Bytes %v\n", err)
 		// should this just return. Do we have an object?
@@ -63,7 +65,7 @@ func PipeLoad(v1 *viper.Viper, mc *minio.Client, bucket, object, spql string) ([
 	}
 
 	// drop any graph we are going to load..  we assume we are doing those due to an update...
-	_, err = graph.Drop(v1, g)
+	_, err = sparql.Drop(v1, g)
 	if err != nil {
 		log.Error(err)
 	}
@@ -94,7 +96,7 @@ func PipeLoad(v1 *viper.Viper, mc *minio.Client, bucket, object, spql string) ([
 		if lc == 10000 { // use line count, since byte len might break inside a triple statement..   it's an OK proxy
 			log.Trace("Subgraph of %d lines", len(sg))
 			// TODO..  upload what we have here, modify the call code to upload these sections
-			_, err = graph.Insert(g, strings.Join(sg, "\n"), spql, sprql.Username, sprql.Password, sprql.Authenticate) // convert []string to strings joined with new line to form a RDF NT set
+			_, err = sparql.Insert(g, strings.Join(sg, "\n"), spql, sprql.Username, sprql.Password, sprql.Authenticate) // convert []string to strings joined with new line to form a RDF NT set
 			if err != nil {
 				log.Error("Insert err: %s", err)
 			}
@@ -104,7 +106,7 @@ func PipeLoad(v1 *viper.Viper, mc *minio.Client, bucket, object, spql string) ([
 	}
 	if lc > 0 {
 		log.Trace("Subgraph (out of scanner) of %d lines", len(sg))
-		_, err = graph.Insert(g, strings.Join(sg, "\n"), spql, sprql.Username, sprql.Password, sprql.Authenticate) // convert []string to strings joined with new line to form a RDF NT set
+		_, err = sparql.Insert(g, strings.Join(sg, "\n"), spql, sprql.Username, sprql.Password, sprql.Authenticate) // convert []string to strings joined with new line to form a RDF NT set
 	}
 
 	return []byte("remove me"), err
