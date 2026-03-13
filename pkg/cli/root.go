@@ -27,9 +27,19 @@ var prefixVal, endpointVal string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "nabu",
-	Short: "nabu ",
-	Long: `nabu
+	Use:   "glcon",
+	Short: "GleanerIO unified tool for harvesting and loading linked data",
+	Long: `glcon (GleanerIO Console) is the unified command-line tool that combines
+Gleaner (data harvesting) and Nabu (graph loading) functionality.
+
+Commands:
+  summon    - Harvest JSON-LD from configured data sources
+  mill      - Process harvested data through the milling pipeline
+  bulk      - Bulk load RDF data to SPARQL endpoints
+  release   - Create release graphs
+  prune     - Remove orphaned graphs
+  graph     - Graph management (clear, drop)
+  config    - Configuration management (init)
 `,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
