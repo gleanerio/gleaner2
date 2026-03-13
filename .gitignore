@@ -2,6 +2,7 @@
 secret/**
 logs/**
 /cmd/nabu/nabu
+/nabu
 **/*.log
 **/.idea/**
 **/.fleet/**
