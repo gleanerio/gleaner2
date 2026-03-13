@@ -1,0 +1,51 @@
+# services.yaml — Service connections and credentials.
+# KEEP THIS FILE PRIVATE. It contains secrets (MinIO keys, SPARQL passwords).
+# Do NOT commit this file to public repositories.
+#
+# Environment variables override values here:
+#   MINIO_ADDRESS, MINIO_PORT, MINIO_USE_SSL,
+#   MINIO_ACCESS_KEY, MINIO_SECRET_KEY, MINIO_BUCKET
+---
+minio:
+  address: localhost
+  port: 9000
+  ssl: false
+  accessKey:       # or set MINIO_ACCESS_KEY
+  secretKey:       # or set MINIO_SECRET_KEY
+  bucket: gleaner  # or set MINIO_BUCKET
+  region: us-east-1
+
+# SPARQL / triplestore endpoints.
+# You can define multiple services (e.g. blazegraph + graphdb) and select
+# which one to use at runtime with --endpoint <service-name>.
+endpoints:
+  - service: blazegraph
+    baseurl: http://localhost:9999/blazegraph/namespace/kb
+    type: blazegraph
+    authenticate: false
+    username:
+    password:
+    modes:
+      - action: sparql
+        suffix: /sparql
+        accept: application/sparql-results+json
+        method: GET
+      - action: update
+        suffix: /sparql
+        accept: application/sparql-update
+        method: POST
+      - action: bulk
+        suffix: /sparql
+        accept: text/x-nquads
+        method: POST
+
+# Summoner settings (harvesting behavior)
+summoner:
+  after: ""             # only harvest pages modified after this date, e.g. "21 May 20 10:00 UTC"
+  mode: full            # full | diff
+  threads: 5
+  delay:                # milliseconds between requests (forces threads=1)
+  headless: http://127.0.0.1:9222  # Chrome headless endpoint
+
+# Optional: headless browser URL (used by gleaner for JS-rendered pages)
+headless: http://127.0.0.1:9222

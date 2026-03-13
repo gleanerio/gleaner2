@@ -1,0 +1,35 @@
+# sources.yaml — Data sources to harvest.
+# This file is SAFE TO SHARE. It contains no secrets.
+# You can also use a CSV file (sources.csv) instead — see gleaner docs.
+---
+sources:
+  - sourcetype: sitemap
+    name: samplesearth
+    url: https://samples.earth/sitemap.xml
+    headless: false
+    pid: https://www.re3data.org/repository/samplesearth
+    propername: Samples Earth (DEMO Site)
+    domain: https://samples.earth
+    active: true
+
+  # - sourcetype: sitegraph
+  #   name: aquadocs
+  #   url: https://oih.aquadocs.org/aquadocs.json
+  #   headless: false
+  #   pid: http://hdl.handle.net/1834/41372
+  #   propername: AquaDocs
+  #   domain: https://aquadocs.org
+  #   active: false
+
+# Implementation network metadata
+implnetwork:
+  orgname: myorg
+
+# JSON-LD context mappings (for schema.org resolution)
+context:
+  cache: true
+contextmaps:
+  - prefix: "https://schema.org/"
+    file: "./assets/schemaorg-current-https.jsonld"
+  - prefix: "http://schema.org/"
+    file: "./assets/schemaorg-current-http.jsonld"

@@ -1,0 +1,24 @@
+# glcon.yaml — Run configuration for glcon (the unified gleaner+nabu tool).
+# Controls what operations to perform and which prefixes to load.
+# This file is SAFE TO SHARE. It contains no secrets.
+---
+
+# Gleaner run settings
+gleaner:
+  runid: runX        # output goes to this run ID
+  summon: true       # harvest JSON-LD from sources?
+  mill: true         # convert harvested data through millers?
+
+# Miller configuration
+millers:
+  graph: true        # produce RDF graphs from JSON-LD
+
+# Object store paths to load into the triplestore (used by nabu operations).
+# These are S3 prefixes in the bucket. Generated from sources by `config generate`.
+objects:
+  domain: us-east-1
+  prefix:
+    - summoned/samplesearth
+    # - milled/samplesearth   # use milled instead of summoned if preferred
+    # - prov/samplesearth     # include provenance graphs
+    # - orgs                  # include organization graphs
