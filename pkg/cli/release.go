@@ -15,6 +15,7 @@ var releaseCmd = &cobra.Command{
 	Short: "nabu release command",
 	Long:  `Generate releases for the indexes sources and also a master release`,
 	Run: func(cmd *cobra.Command, args []string) {
+		requireConfig()
 		err := pkg.Release(viperVal, mc)
 		if err != nil {
 			log.Println(err) // was log.Fatal which seems odd

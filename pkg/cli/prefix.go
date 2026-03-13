@@ -16,6 +16,7 @@ var PrefixCmd = &cobra.Command{
 	Short: "nabu prefix command",
 	Long:  `Load graphs from prefix to triplestore`,
 	Run: func(cmd *cobra.Command, args []string) {
+		requireConfig()
 		err := pkg.Prefix(viperVal, mc)
 		if err != nil {
 			log.Fatal(err)

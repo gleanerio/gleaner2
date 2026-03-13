@@ -16,6 +16,7 @@ var DrainCmd = &cobra.Command{
 	Short: "nabu drain command",
 	Long:  `Remove all objects from a S3 bucket - prefix `,
 	Run: func(cmd *cobra.Command, args []string) {
+		requireConfig()
 		err := pkg.Drain(viperVal, mc)
 		if err != nil {
 			log.Fatal(err)

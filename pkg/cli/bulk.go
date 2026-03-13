@@ -14,6 +14,7 @@ var bulkCmd = &cobra.Command{
 	Short: "nabu bulk command",
 	Long:  `(not implemented)This will read the configs/{cfgPath}/gleaner file, and try to connect to the minio server`,
 	Run: func(cmd *cobra.Command, args []string) {
+		requireConfig()
 		err := pkg.Bulk(viperVal, mc)
 		if err != nil {
 			log.Println(err) // was log.Fatal which seems odd

@@ -52,6 +52,17 @@ func Execute() {
 	cobra.CheckErr(rootCmd.Execute())
 }
 
+// requireConfig checks that configuration and MinIO connection are loaded.
+// Commands that need config should call this at the start of their Run function.
+func requireConfig() {
+	if viperVal == nil {
+		log.Fatal("Configuration not loaded. Provide --cfg, --cfgPath/--cfgName, or --cfgURL.")
+	}
+	if mc == nil {
+		log.Fatal("MinIO connection not established. Check your config and MinIO settings.")
+	}
+}
+
 func init() {
 	//LOG_FILE := "nabu.log" // log to custom file
 	//logFile, err := os.OpenFile(LOG_FILE, os.O_APPEND|os.O_RDWR|os.O_CREATE, 0644)
@@ -85,7 +96,7 @@ func init() {
 	// Enpoint Server setting var
 	rootCmd.PersistentFlags().StringVar(&endpointVal, "endpoint", "", "end point server set for the SPARQL endpoints")
 
-	rootCmd.PersistentFlags().StringVar(&cfgURL, "cfgURL", "configs", "URL location for config file")
+	rootCmd.PersistentFlags().StringVar(&cfgURL, "cfgURL", "", "URL location for config file")
 	rootCmd.PersistentFlags().StringVar(&cfgPath, "cfgPath", "configs", "base location for config files (default is configs/)")
 	rootCmd.PersistentFlags().StringVar(&cfgName, "cfgName", "local", "config file (default is local so configs/local)")
 	rootCmd.PersistentFlags().StringVar(&nabuConfName, "nabuConfName", "nabu", "config file (default is local so configs/local)")
@@ -106,65 +117,56 @@ func init() {
 }
 
 // initConfig reads in config file and ENV variables if set.
+// This runs before every command via cobra.OnInitialize. Commands that don't
+// need config (like --help, config init) will get nil viperVal/mc and should
+// handle that gracefully.
 func initConfig() {
 	var err error
-	//viperVal := viper.New()
+
+	// Load configuration from the appropriate source
 	if cfgFile != "" {
-		// Use config file from the flag.
-		//viperVal.SetConfigFile(cfgFile)
 		viperVal, err = config.ReadNabuConfig(filepath.Base(cfgFile), filepath.Dir(cfgFile))
 		if err != nil {
-			log.Fatal("cannot read config %s", err)
+			log.Warnf("cannot read config: %s", err)
+			return
 		}
 	} else if cfgURL != "" {
 		viperVal, err = config.ReadNabuConfigURL(cfgURL)
 		if err != nil {
-			log.Fatal("cannot read config URL %s", err)
+			log.Warnf("cannot read config URL: %s", err)
+			return
 		}
 	} else {
-		// Find home directory.
-		//home, err := os.UserHomeDir()
-		//cobra.CheckErr(err)
-		//
-		//// Search config in home directory with name "nabu" (without extension).
-		//viperVal.AddConfigPath(home)
-		//viperVal.AddConfigPath(path.Join(cfgPath, cfgName))
-		//viperVal.SetConfigType("yaml")
-		//viperVal.SetConfigName("nabu")
 		viperVal, err = config.ReadNabuConfig(nabuConfName, path.Join(cfgPath, cfgName))
 		if err != nil {
-			log.Fatal("cannot read config %s", err)
+			// Config not found is normal for --help, config init, etc.
+			log.Debugf("cannot read config: %s", err)
+			return
 		}
 	}
 
-	//viper.AutomaticEnv() // read in environment variables that match
-
-	// If a config file is found, read it in.
+	if viperVal == nil {
+		return
+	}
 
 	mc, err = storage.MinioConnection(viperVal)
 	if err != nil {
-		log.Fatal("cannot connect to minio: %s", err)
+		log.Warnf("cannot connect to minio: %s", err)
+		return
 	}
 
 	err = common.ConnCheck(mc)
 	if err != nil {
-		err = errors.New(err.Error() + fmt.Sprintf(" Ignore that. It's not the bucket. check config/minio: address, port, ssl. connection info: endpoint: %v ", mc.EndpointURL()))
-		log.Fatal("cannot connect to minio: ", err)
+		err = errors.New(err.Error() + fmt.Sprintf(" check config/minio: address, port, ssl. connection info: endpoint: %v ", mc.EndpointURL()))
+		log.Warnf("cannot connect to minio: %s", err)
+		return
 	}
 
 	bucketVal, err = config.GetBucketName(viperVal)
 	if err != nil {
-		log.Fatal("cannot read bucketname from : %s ", err)
+		log.Warnf("cannot read bucket name: %s", err)
+		return
 	}
-	// Override prefix in config if flag set
-	//if isFlagPassed("prefix") {
-	//	out := viperVal.GetStringMapString("objects")
-	//	b := out["bucket"]
-	//	p := prefixVal
-	//	// r := out["region"]
-	//	// v1.Set("objects", map[string]string{"bucket": b, "prefix": NEWPREFIX, "region": r})
-	//	viperVal.Set("objects", map[string]string{"bucket": b, "prefix": p})
-	//}
 
 	if dangerousVal {
 		viperVal.Set("flags.dangerous", true)
@@ -175,18 +177,8 @@ func initConfig() {
 	}
 
 	if prefixVal != "" {
-		//out := viperVal.GetStringMapString("objects")
-		//d := out["domain"]
-
 		var p []string
 		p = append(p, prefixVal)
-
 		viperVal.Set("objects.prefix", p)
-
-		//p := prefixVal
-		// r := out["region"]
-		// v1.Set("objects", map[string]string{"bucket": b, "prefix": NEWPREFIX, "region": r})
-		//viperVal.Set("objects", map[string]string{"domain": d, "prefix": p})
 	}
-
 }

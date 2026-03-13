@@ -28,7 +28,7 @@ func NabuMeili(v1 *viper.Viper) error {
 	common.InitLogging()
 	mc, err := storage.MinioConnection(v1)
 	if err != nil {
-		log.Fatal("cannot connect to minio: %s", err)
+		log.Fatalf("cannot connect to minio: %s", err)
 	}
 	return Meili(v1, mc)
 }

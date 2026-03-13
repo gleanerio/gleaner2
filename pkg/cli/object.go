@@ -17,6 +17,7 @@ var objectCmd = &cobra.Command{
 	Short: "nabu object command",
 	Long:  `Load graph object to triplestore`,
 	Run: func(cmd *cobra.Command, args []string) {
+		requireConfig()
 		fmt.Println("object called")
 		if len(args) > 0 {
 			objectVal := args[0]

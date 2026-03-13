@@ -16,6 +16,7 @@ var meiliCmd = &cobra.Command{
 	Short: "nabu meili command",
 	Long:  `This will read the configs/{cfgPath}/gleaner and connect and load JSON-LD into MeiliSearch for full text indexing`,
 	Run: func(cmd *cobra.Command, args []string) {
+		requireConfig()
 		fmt.Println("meili called")
 		err := pkg.Meili(viperVal, mc)
 		if err != nil {

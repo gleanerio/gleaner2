@@ -20,6 +20,7 @@ var graphClearCmd = &cobra.Command{
 	Short: "Clear all graphs from the triplestore",
 	Long:  `Clear removes ALL graphs from the triplestore. Requires --dangerous flag.`,
 	Run: func(cmd *cobra.Command, args []string) {
+		requireConfig()
 		err := pkg.Clear(viperVal, mc)
 		if err != nil {
 			log.Println(err)
@@ -34,6 +35,7 @@ var graphDropCmd = &cobra.Command{
 	Long:  `Drop removes a specific named graph from the triplestore.`,
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
+		requireConfig()
 		_, err := sparql.Drop(viperVal, args[0])
 		if err != nil {
 			log.Println(err)

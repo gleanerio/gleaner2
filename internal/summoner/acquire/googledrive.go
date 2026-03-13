@@ -307,7 +307,7 @@ func GetFromGDrive(mc *minio.Client, v1 *viper.Viper) (string, error) {
 		for i, f := range l {
 			bar.Add(1)
 			//results = append(results,f)
-			log.Infof("uploading %i of %i %s\n", i, len(l), f.Name)
+			log.Infof("uploading %d of %d %s\n", i, len(l), f.Name)
 			o, err := gfileProcessing(mc, v1, srv, f, s.Name, bucketName)
 			if err != nil {
 				continue
@@ -317,12 +317,12 @@ func GetFromGDrive(mc *minio.Client, v1 *viper.Viper) (string, error) {
 			//	break
 			//}
 		}
-		log.Info(" googledrive source %s complete", s.Name)
+		log.Infof(" googledrive source %s complete", s.Name)
 		fmt.Printf(" googledrive source %s complete", s.Name)
 	}
 	var count = len(results)
 	m := fmt.Sprintf("GoogleDrives %d files processed", count)
-	log.Info("GoogleDrives %d files processed", count)
+	log.Infof("GoogleDrives %d files processed", count)
 	return m, err
 }
 

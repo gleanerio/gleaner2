@@ -2,8 +2,6 @@ package cli
 
 import (
 	"github.com/gleanerio/nabu/internal/millers"
-	log "github.com/sirupsen/logrus"
-	"os"
 
 	"github.com/spf13/cobra"
 )
@@ -15,10 +13,7 @@ var millCmd = &cobra.Command{
 milling pipeline. This converts JSON-LD to RDF (N-Quads) using the shared
 graph conversion code, and optionally runs SHACL validation.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		if viperVal == nil {
-			log.Fatal("Configuration not loaded")
-			os.Exit(1)
-		}
+		requireConfig()
 		millers.Millers(mc, viperVal)
 	},
 }

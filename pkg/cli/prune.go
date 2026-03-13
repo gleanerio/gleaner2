@@ -14,6 +14,7 @@ var pruneCmd = &cobra.Command{
 	Short: "nabu prune command",
 	Long:  `(not implemented)This will read the configs/{cfgPath}/gleaner file, and try to connect to the minio server`,
 	Run: func(cmd *cobra.Command, args []string) {
+		requireConfig()
 		log.Println("Prune call started")
 		err := pkg.Prune(viperVal, mc)
 		if err != nil {

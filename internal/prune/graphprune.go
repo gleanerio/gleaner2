@@ -51,7 +51,7 @@ func Snip(v1 *viper.Viper, mc *minio.Client) error {
 		for x := range oa {
 			g, err := graph.MakeURN(v1, oa[x])
 			if err != nil {
-				log.Error("MakeURN error: %v\n", err)
+				log.Errorf("MakeURN error: %v\n", err)
 			}
 			oam[g] = oa[x] // key (URN)= value (object prefixpath)
 		}
@@ -81,11 +81,11 @@ func Snip(v1 *viper.Viper, mc *minio.Client) error {
 				log.Infof("Removed graph: %s\n", d[x])
 				_, err = sparql.Drop(v1, d[x])
 				if err != nil {
-					log.Error("Progress bar update issue: %v\n", err)
+					log.Errorf("Progress bar update issue: %v\n", err)
 				}
 				err = bar.Add(1)
 				if err != nil {
-					log.Error("Progress bar update issue: %v\n", err)
+					log.Errorf("Progress bar update issue: %v\n", err)
 				}
 			}
 		}
@@ -104,17 +104,17 @@ func Snip(v1 *viper.Viper, mc *minio.Client) error {
 
 		if len(m) > 0 {
 			bar2 := progressbar.Default(int64(len(m)))
-			log.Info("uploading missing %n objects", len(m))
+			log.Infof("uploading missing %d objects", len(m))
 			for x := range m {
 				np := oam[m[x]]
 				log.Tracef("Add graph: %s  %s \n", m[x], np)
 				_, err := objects.PipeLoad(v1, mc, bucketName, np, spql.URL)
 				if err != nil {
-					log.Error("prune -> pipeLoad %v\n", err)
+					log.Errorf("prune -> pipeLoad %v\n", err)
 				}
 				err = bar2.Add(1)
 				if err != nil {
-					log.Error("Progress bar update issue: %v\n", err)
+					log.Errorf("Progress bar update issue: %v\n", err)
 				}
 			}
 		}

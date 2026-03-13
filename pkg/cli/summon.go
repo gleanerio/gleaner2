@@ -2,8 +2,6 @@ package cli
 
 import (
 	"github.com/gleanerio/nabu/internal/summoner"
-	log "github.com/sirupsen/logrus"
-	"os"
 
 	"github.com/spf13/cobra"
 )
@@ -15,10 +13,7 @@ var summonCmd = &cobra.Command{
 structured data from websites via their sitemaps, APIs, or other methods.
 The harvested data is stored in the configured S3/MinIO object store.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		if viperVal == nil {
-			log.Fatal("Configuration not loaded")
-			os.Exit(1)
-		}
+		requireConfig()
 		summoner.Summoner(mc, viperVal)
 	},
 }

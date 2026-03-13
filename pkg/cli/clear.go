@@ -16,6 +16,7 @@ var ClearCmd = &cobra.Command{
 	Short: "nabu clear command",
 	Long:  `Removes all graphs from a SPARQL endpoint `,
 	Run: func(cmd *cobra.Command, args []string) {
+		requireConfig()
 		err := pkg.Clear(viperVal, mc)
 		if err != nil {
 			log.Fatal(err)

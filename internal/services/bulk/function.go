@@ -54,7 +54,7 @@ func BulkLoad(v1 *viper.Viper, mc *minio.Client, bucketName string, item string)
 	//bn := strings.Replace(bucketName, ".", ":", -1) // convert to urn : values, buckets with . are not valid IRIs
 	//g, err := graph.MakeURN(v1, item)
 	if err != nil {
-		log.Error("gets3Bytes %v\n", err)
+		log.Errorf("gets3Bytes %v\n", err)
 		return "", err // Assume return. since on this error things are not good?
 	}
 	//url := fmt.Sprintf("%s?graph=%s", ep, g)  // NOTE 11-13-2023  ?graph with nquads fails with Oxigraph
