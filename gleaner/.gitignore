@@ -1,0 +1,16 @@
+**/secret/
+deployments/output/**
+deployments/dataVolume/**
+cmd/gleaner/gleaner
+cmd/gleaner/gleaner.exe
+cmd/gleaner/gleaner_darwin
+output/**
+.DS_Store
+/configs/gleaner
+configs/local/
+*.log
+**/*.log
+**/credentials/
+.idea
+
+/configs/wifire/
