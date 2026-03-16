@@ -38,7 +38,7 @@ configs/<name>/
 └── glcon.yaml       # SHAREABLE: run settings, object prefixes, miller config
 ```
 
-**Why three files?**
+**Why three files?*
 - `services.yaml` contains secrets (S3 keys, SPARQL passwords) — keep private, use env vars in CI
 - `sources.yaml` contains the list of data sources — safe to share, version, or generate from CSV
 - `glcon.yaml` controls what glcon does (summon, mill, load prefixes) — safe to share

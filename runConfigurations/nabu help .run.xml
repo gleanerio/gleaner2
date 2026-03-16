@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="nabu help " type="GoApplicationRunConfiguration" factoryName="Go Application" folderName="help">
+  <configuration default="false" name="nabu help " type="GoApplicationRunConfiguration" factoryName="Go Application" folderName="merged">
     <module name="nabu" />
     <working_directory value="$PROJECT_DIR$" />
     <parameters value="help" />
@@ -10,11 +10,11 @@
       <option name="IS_IGNORE_MISSING_FILES" value="false" />
       <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
       <ENTRIES>
-        <ENTRY IS_ENABLED="true" PARSER="runconfig" />
+        <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
       </ENTRIES>
     </EXTENSION>
     <kind value="FILE" />
-    <package value="github.com/UFOKN/nabu" />
+    <package value="github.com/UFOKN/nabugithub.com/gleanerio/nabu/cmd/glcon" />
     <directory value="$PROJECT_DIR$" />
     <filePath value="$PROJECT_DIR$/cmd/nabu/main.go" />
     <method v="2" />
