@@ -19,35 +19,20 @@ const (
 	FileSha                  = "filesha"
 )
 
-// ContextOption represents context handling modes for JSON-LD processing
-type ContextOption int64
+// ContextOption represents context handling modes for JSON-LD processing.
+// Stored as a string to match YAML config values ("strict", "https", "http", etc.).
+type ContextOption = string
 
 const (
-	Strict ContextOption = iota
-	Https
-	Http
-	StandardizedHttps
-	StandardizedHttp
+	Strict            ContextOption = "strict"
+	Https             ContextOption = "https"
+	Http              ContextOption = "http"
+	StandardizedHttps ContextOption = "standardizedHttps"
+	StandardizedHttp  ContextOption = "standardizedHttp"
 )
 
 // AccceptContentType is the default accept content type for HTTP requests (note: legacy spelling preserved)
 const AccceptContentType string = "application/ld+json, text/html"
-
-func (s ContextOption) String() string {
-	switch s {
-	case Strict:
-		return "strict"
-	case Https:
-		return "https"
-	case Http:
-		return "http"
-	case StandardizedHttps:
-		return "standardizedHttps"
-	case StandardizedHttp:
-		return "standardizedHttp"
-	}
-	return "unknown"
-}
 
 // Sources holds configuration for a data source (website, API, etc.)
 // Originally from Gleaner's internal/config/sources.go

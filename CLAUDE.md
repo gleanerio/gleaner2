@@ -12,19 +12,29 @@ Reference: https://github.com/gleanerio/gleaner/wiki/Discussion-for-merging-Glea
 
 ```bash
 # Build
-go build ./cmd/nabu/
+go build -o nabu ./cmd/nabu/
 
-# Run tests
-go test ./...
+# Run stable tests (config + graph packages)
+make test
 
-# Run specific package tests
-go test ./pkg/graph/
-go test ./internal/common/
+# Run all tests (some pre-existing failures in internal/)
+make test-all
 
-# CLI smoke tests (no config required)
-./nabu --help
-./nabu prefix --help
-./nabu config init --help
+# Static analysis
+make vet
+
+# CLI smoke test — verifies every subcommand's --help works
+make smoke
+
+# Full pre-commit check: build + vet + tests + smoke
+make check
+
+# Validate a config directory
+make validate-config CFG_DIR=configs/local
+
+# Run specific package tests directly
+go test -v ./pkg/config/
+go test -v ./pkg/graph/
 ```
 
 ## Configuration Architecture

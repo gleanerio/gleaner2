@@ -81,7 +81,7 @@ func Snip(v1 *viper.Viper, mc *minio.Client) error {
 				log.Infof("Removed graph: %s\n", d[x])
 				_, err = sparql.Drop(v1, d[x])
 				if err != nil {
-					log.Errorf("Progress bar update issue: %v\n", err)
+					log.Errorf("Failed to drop graph %s: %v\n", d[x], err)
 				}
 				err = bar.Add(1)
 				if err != nil {

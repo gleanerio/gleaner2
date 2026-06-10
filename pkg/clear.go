@@ -37,5 +37,5 @@ func NabuClear(v1 *viper.Viper) error {
 	if err != nil {
 		log.Fatalf("cannot connect to minio: %s", err)
 	}
-	return Prefix(v1, mc)
+	return Clear(v1, mc)
 }
