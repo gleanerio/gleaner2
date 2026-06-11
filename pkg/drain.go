@@ -10,7 +10,7 @@ import (
 )
 
 func Drain(v1 *viper.Viper, mc *minio.Client) error {
-	log.Info("Nabu started with mode: prefix")
+	log.Info("Nabu started with mode: drain")
 	err := drain.Objects(v1, mc)
 
 	if err != nil {
@@ -27,5 +27,5 @@ func NabuDrain(v1 *viper.Viper) error {
 	if err != nil {
 		log.Fatalf("cannot connect to minio: %s", err)
 	}
-	return Prefix(v1, mc)
+	return Drain(v1, mc)
 }
