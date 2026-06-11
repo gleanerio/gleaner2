@@ -13,7 +13,7 @@ import (
 // checkCmd represents the check command
 var DrainCmd = &cobra.Command{
 	Use:   "drain ",
-	Short: "nabu drain command",
+	Short: "Remove objects from an S3 bucket prefix",
 	Long:  `Remove all objects from a S3 bucket - prefix `,
 	Run: func(cmd *cobra.Command, args []string) {
 		requireConfig()

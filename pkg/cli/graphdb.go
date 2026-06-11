@@ -11,7 +11,7 @@ import (
 // checkCmd represents the check command
 var graphdbCmd = &cobra.Command{
 	Use:   "graphdb",
-	Short: "nabu graphdb command",
+	Short: "GraphDB-specific operations",
 	Long:  `(not implemented)This will read the configs/{cfgPath}/gleaner file, and try to connect to the minio server`,
 	Run: func(cmd *cobra.Command, args []string) {
 		requireConfig()

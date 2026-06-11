@@ -13,7 +13,7 @@ import (
 // checkCmd represents the check command
 var PrefixCmd = &cobra.Command{
 	Use:   "prefix ",
-	Short: "nabu prefix command",
+	Short: "Load objects by S3 prefix into the triplestore",
 	Long:  `Load graphs from prefix to triplestore`,
 	Run: func(cmd *cobra.Command, args []string) {
 		requireConfig()

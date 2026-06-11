@@ -11,7 +11,7 @@ import (
 // checkCmd represents the check command
 var pruneCmd = &cobra.Command{
 	Use:   "prune",
-	Short: "nabu prune command",
+	Short: "Synchronize triplestore graphs with the object store",
 	Long:  `(not implemented)This will read the configs/{cfgPath}/gleaner file, and try to connect to the minio server`,
 	Run: func(cmd *cobra.Command, args []string) {
 		requireConfig()

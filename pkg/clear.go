@@ -29,8 +29,8 @@ func Clear(v1 *viper.Viper, mc *minio.Client) error {
 	return nil
 }
 
-// NabuClear used by glcon in gleaner. Need to develop a more common config for the services (aka s3, graph, etc.)
-// cannot pass a nabu config to the gleaner code to create a minio client, and have it work
+// NabuClear is a wrapper that builds its own minio client from the config.
+// TODO: develop a common config for the services (s3, graph, etc.)
 func NabuClear(v1 *viper.Viper) error {
 	common.InitLogging()
 	mc, err := storage.MinioConnection(v1)

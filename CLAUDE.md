@@ -1,8 +1,8 @@
-# CLAUDE.md - Development Guidelines for glcon
+# CLAUDE.md - Development Guidelines for gleaner
 
 ## Project Overview
 
-glcon is a **single unified CLI tool** that merges the former Gleaner (data harvesting) and Nabu (graph loading) projects. It reads JSON-LD from websites, stores it in S3-compatible object stores, converts to RDF, and loads into SPARQL triplestores.
+gleaner is a **single unified CLI tool** (binary: `gleaner`, built from `cmd/gleaner/`) that merges the former Gleaner (data harvesting) and Nabu (graph loading) projects. It reads JSON-LD from websites, stores it in S3-compatible object stores, converts to RDF, and loads into SPARQL triplestores.
 
 **Key design goal:** Configuration is split into separate files so that secrets (service credentials) are never mixed with shareable data (source lists, run settings). See [Configuration Architecture](#configuration-architecture) below.
 
@@ -12,7 +12,7 @@ Reference: https://github.com/gleanerio/gleaner/wiki/Discussion-for-merging-Glea
 
 ```bash
 # Build
-go build -o nabu ./cmd/nabu/
+go build -o gleaner ./cmd/gleaner/    # or: make build
 
 # Run stable tests (config + graph packages)
 make test
@@ -45,13 +45,13 @@ Configuration is split into three files to separate concerns:
 configs/<name>/
 ├── services.yaml    # PRIVATE: MinIO keys, SPARQL credentials, headless URL
 ├── sources.yaml     # SHAREABLE: data sources, context maps, org metadata
-└── glcon.yaml       # SHAREABLE: run settings, object prefixes, miller config
+└── gleaner.yaml     # SHAREABLE: run settings, object prefixes, miller config
 ```
 
 **Why three files?**
 - `services.yaml` contains secrets (S3 keys, SPARQL passwords) — keep private, use env vars in CI
 - `sources.yaml` contains the list of data sources — safe to share, version, or generate from CSV
-- `glcon.yaml` controls what glcon does (summon, mill, load prefixes) — safe to share
+- `gleaner.yaml` controls what gleaner does (summon, mill, load prefixes) — safe to share
 
 See `configs/template/` for annotated examples of each file.
 
@@ -97,7 +97,7 @@ contextmaps:
     file: "./assets/schemaorg-current-https.jsonld"
 ```
 
-### Run config (`glcon.yaml`)
+### Run config (`gleaner.yaml`)
 Controls what operations to perform:
 ```yaml
 gleaner:
@@ -134,7 +134,7 @@ The `config generate` command (from gleaner) reads base templates + `sources.csv
 
 ## CLI Commands
 
-glcon provides a unified command set:
+gleaner provides a unified command set:
 
 | Command | Description | Needs Config? |
 |---------|-------------|---------------|
@@ -153,9 +153,9 @@ glcon provides a unified command set:
 Before committing changes, verify:
 
 ### 1. Build and CLI Smoke Test
-- [ ] `go build ./cmd/nabu/` succeeds with no errors
-- [ ] `./nabu --help` runs without crashing (no config required)
-- [ ] `./nabu <subcommand> --help` runs without crashing for each changed subcommand
+- [ ] `make build` succeeds with no errors
+- [ ] `./gleaner --help` runs without crashing (no config required)
+- [ ] `make smoke` passes — every subcommand's --help works
 - [ ] `go vet ./...` reports no issues
 
 ### 2. Tests
@@ -175,17 +175,17 @@ Before committing changes, verify:
 
 ### 5. Config Package Completeness
 - [ ] If adding new code to `internal/` that references `config.*` or `configTypes.*`, verify the referenced function/type exists in `pkg/config/`
-- [ ] The `pkg/config/` package is the single source of truth — `gleaner/internal/config/` is the original source but `internal/` imports from `pkg/config/`
+- [ ] The `pkg/config/` package is the single source of truth for config types — `internal/` imports from `pkg/config/`
 
 ## Architecture Notes
 
-- **Entry point**: `cmd/nabu/main.go`
+- **Entry point**: `cmd/gleaner/main.go` (the only binary)
 - **CLI commands**: `pkg/cli/` — each file defines a cobra command
 - **Config types & readers**: `pkg/config/` — shared across all operations
 - **Shared libraries**: `pkg/graph/`, `pkg/storage/` — JSON-LD/RDF conversion, S3 operations
 - **Core logic**: `internal/` — summoner (harvesting), millers (processing), objects (loading), prune, sparql, services
-- **Config templates**: `configs/template/` — annotated example configs
-- **Gleaner source**: `gleaner/` — original gleaner code (subtree merge, reference for config generation)
+- **Config templates**: `configs/template/` — annotated example configs (services.yaml, sources.yaml, gleaner.yaml)
+- **History**: the original gleaner code previously lived in a `gleaner/` subtree; it has been removed — all functionality is merged into `internal/` and `pkg/`
 
 ## Common Patterns
 

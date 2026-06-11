@@ -12,11 +12,11 @@ RUN apk add openssl certbot curl --no-cache \
     && rm -rf /var/cache/apk/*
 
 # Add in the static elements (could also mount these from local filesystem)
-RUN mkdir /nabu
-RUN mkdir /nabu/config
-RUN mkdir /nabu/assets
-ADD ./cmd/nabu/nabu /nabu/
-ADD ./assets /nabu/assets
+RUN mkdir /gleaner
+RUN mkdir /gleaner/config
+RUN mkdir /gleaner/assets
+ADD ./gleaner /gleaner/
+ADD ./assets /gleaner/assets
 
 RUN mkdir /assets
 # just in case thin
@@ -30,4 +30,4 @@ RUN curl https://schema.org/version/latest/schemaorg-current-http.jsonld --outpu
 # from the ignore file... we mount the volume via compose from the local FS
 
 # Add our binary
-ENTRYPOINT ["/nabu/nabu"]
+ENTRYPOINT ["/gleaner/gleaner"]

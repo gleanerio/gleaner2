@@ -21,8 +21,8 @@ func Bulk(v1 *viper.Viper, mc *minio.Client) error {
 	return err
 }
 
-// used by glcon in gleaner. Need to develop a more common config for the services (aka s3, graph, etc)
-// cannot pass a nabu config to the gleaner code to create a minio client, and have it work
+// Wrapper that builds its own minio client from the config.
+// TODO: develop a common config for the services (s3, graph, etc.)
 func NabuBulk(v1 *viper.Viper) error {
 	common.InitLogging()
 	mc, err := storage.MinioConnection(v1)

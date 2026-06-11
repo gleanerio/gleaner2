@@ -1,9 +1,9 @@
-# glcon - GleanerIO Unified Tool
+# gleaner - GleanerIO Unified Tool
 
 ## About
 
-`glcon` (GleanerIO Console) is the unified command-line tool that combines
-**Gleaner** (data harvesting) and **Nabu** (graph loading) into a single binary.
+`gleaner` is the unified command-line tool that merges the former
+**Gleaner** (data harvesting) and **Nabu** (graph loading) projects into a single binary.
 
 It reads structured data (JSON-LD) from websites via sitemaps and APIs, stores it
 in an S3-compatible object store (MinIO, AWS S3, Google Cloud Storage, Wasabi),
@@ -16,46 +16,46 @@ Triplestore requirements:
 ## Building
 
 ```bash
-make build          # builds both nabu and glcon binaries
-go build ./cmd/nabu/main.go    # build nabu only
+make build                       # builds the gleaner binary
+go build -o gleaner ./cmd/gleaner/
 ```
 
 ## Quick Start
 
 ```bash
 # 1. Initialize a configuration directory
-glcon config init myproject
+gleaner config init myproject
 
 # 2. Edit configs (see Configuration section below)
 #    myproject/nabu.yaml      - service connections (MinIO, SPARQL)
 #    myproject/gleaner.yaml   - data sources
 
 # 3. Harvest JSON-LD from configured sources
-glcon summon --cfgPath myproject --cfgName gleaner
+gleaner summon --cfgPath myproject --cfgName gleaner
 
 # 4. Process harvested data into RDF (N-Quads)
-glcon mill --cfgPath myproject --cfgName gleaner
+gleaner mill --cfgPath myproject --cfgName gleaner
 
 # 5. Load RDF into triplestore
-glcon prefix --cfgPath myproject --cfgName local
+gleaner prefix --cfgPath myproject --cfgName local
 ```
 
 ## Configuration
 
-glcon requires a YAML configuration file. A template can be found in
+gleaner requires a YAML configuration file. A template can be found in
 [example.yaml](../config/example.yaml).
 
 There are three ways to specify a config file:
 
 ```bash
 # 1. Full path to a config file
-glcon <command> --cfg /path/to/config.yaml
+gleaner <command> --cfg /path/to/config.yaml
 
 # 2. Config directory + name (looks for <cfgPath>/<cfgName>/nabu.yaml)
-glcon <command> --cfgPath configs --cfgName local
+gleaner <command> --cfgPath configs --cfgName local
 
 # 3. URL-based configuration
-glcon <command> --cfgURL https://example.org/nabuconfig.yaml
+gleaner <command> --cfgURL https://example.org/nabuconfig.yaml
 ```
 
 ### Minimal Configuration Example
@@ -136,8 +136,8 @@ These flags are available on all commands:
 Create a new configuration directory with template files.
 
 ```bash
-glcon config init                # creates ./configs/
-glcon config init myproject      # creates ./myproject/
+gleaner config init                # creates ./configs/
+gleaner config init myproject      # creates ./myproject/
 ```
 
 ---
@@ -149,10 +149,10 @@ APIs, or headless browser rendering. Stores harvested data in MinIO/S3.
 
 ```bash
 # Using config path
-glcon summon --cfgPath configs --cfgName local
+gleaner summon --cfgPath configs --cfgName local
 
 # Using full config path
-glcon summon --cfg /path/to/gleaner.yaml
+gleaner summon --cfg /path/to/gleaner.yaml
 ```
 
 ---
@@ -163,8 +163,8 @@ Processes harvested JSON-LD through the milling pipeline: converts JSON-LD to
 RDF (N-Quads) and optionally runs SHACL validation.
 
 ```bash
-glcon mill --cfgPath configs --cfgName local
-glcon mill --cfg /path/to/gleaner.yaml
+gleaner mill --cfgPath configs --cfgName local
+gleaner mill --cfg /path/to/gleaner.yaml
 ```
 
 ---
@@ -175,13 +175,13 @@ Reads all objects from configured S3 prefixes and loads them into the triplestor
 
 ```bash
 # Load all configured prefixes
-glcon prefix --cfg example.yaml
+gleaner prefix --cfg example.yaml
 
 # Load a specific prefix only
-glcon prefix --cfg example.yaml --prefix summoned/amgeo
+gleaner prefix --cfg example.yaml --prefix summoned/amgeo
 
 # Using config path
-glcon prefix --cfgPath configs --cfgName local
+gleaner prefix --cfgPath configs --cfgName local
 ```
 
 ---
@@ -193,9 +193,9 @@ new ones. Updated objects get new SHA256-based names, so updates are treated
 as new objects and old versions are pruned.
 
 ```bash
-glcon prune --cfg example.yaml
-glcon prune --cfg example.yaml --prefix summoned/amgeo
-glcon prune --cfgPath configs --cfgName local
+gleaner prune --cfg example.yaml
+gleaner prune --cfg example.yaml --prefix summoned/amgeo
+gleaner prune --cfgPath configs --cfgName local
 ```
 
 ---
@@ -230,10 +230,10 @@ contentType: text/x-nquads
 
 ```bash
 # Bulk load a specific prefix
-glcon bulk --cfg example.yaml --prefix summoned/providera
+gleaner bulk --cfg example.yaml --prefix summoned/providera
 
 # Bulk load all configured prefixes
-glcon bulk --cfg example.yaml
+gleaner bulk --cfg example.yaml
 ```
 
 ---
@@ -246,10 +246,10 @@ one file as N-Quads, with named graphs following the URN pattern defined in
 
 ```bash
 # Release for a specific source
-glcon release --cfg example.yaml --prefix summoned/providera
+gleaner release --cfg example.yaml --prefix summoned/providera
 
 # Release for all configured sources
-glcon release --cfg example.yaml
+gleaner release --cfg example.yaml
 ```
 
 ---
@@ -259,9 +259,9 @@ glcon release --cfg example.yaml
 Loads a single S3 object into the triplestore by its path.
 
 ```bash
-glcon object --cfg example.yaml milled/opentopography/ffa0df033bb3a8fc9f600c80df3501fe1a2dbe93.rdf
+gleaner object --cfg example.yaml milled/opentopography/ffa0df033bb3a8fc9f600c80df3501fe1a2dbe93.rdf
 
-glcon object --cfgPath configs --cfgName local milled/opentopography/abc123.rdf
+gleaner object --cfgPath configs --cfgName local milled/opentopography/abc123.rdf
 ```
 
 ---
@@ -271,7 +271,7 @@ glcon object --cfgPath configs --cfgName local milled/opentopography/abc123.rdf
 Removes all objects from an S3 bucket prefix. Use `--prefix` to limit scope.
 
 ```bash
-glcon drain --cfg example.yaml --prefix summoned/providera
+gleaner drain --cfg example.yaml --prefix summoned/providera
 ```
 
 ---
@@ -281,7 +281,7 @@ glcon drain --cfg example.yaml --prefix summoned/providera
 Removes ALL graphs from the triplestore. Requires `--dangerous` flag.
 
 ```bash
-glcon clear --cfg example.yaml --dangerous
+gleaner clear --cfg example.yaml --dangerous
 ```
 
 ---
@@ -295,7 +295,7 @@ Parent command for graph operations.
 Clear all graphs from the triplestore (requires `--dangerous`):
 
 ```bash
-glcon graph clear --cfg example.yaml --dangerous
+gleaner graph clear --cfg example.yaml --dangerous
 ```
 
 #### graph drop
@@ -303,7 +303,7 @@ glcon graph clear --cfg example.yaml --dangerous
 Drop a specific named graph:
 
 ```bash
-glcon graph drop "http://example.org/mygraph" --cfg example.yaml
+gleaner graph drop "http://example.org/mygraph" --cfg example.yaml
 ```
 
 ---
@@ -313,7 +313,7 @@ glcon graph drop "http://example.org/mygraph" --cfg example.yaml
 Loads JSON-LD data into a MeiliSearch instance for full-text search indexing.
 
 ```bash
-glcon meili --cfg example.yaml
+gleaner meili --cfg example.yaml
 ```
 
 ---
@@ -327,16 +327,16 @@ to RDF, and load it into a Blazegraph triplestore.
 
 ```bash
 # Step 1: Harvest JSON-LD from the configured sitemap sources
-glcon summon --cfgPath configs --cfgName local
+gleaner summon --cfgPath configs --cfgName local
 
 # Step 2: Mill the harvested JSON-LD into N-Quads RDF
-glcon mill --cfgPath configs --cfgName local
+gleaner mill --cfgPath configs --cfgName local
 
 # Step 3: Load milled RDF into the triplestore
-glcon prefix --cfgPath configs --cfgName local --prefix milled/opentopography
+gleaner prefix --cfgPath configs --cfgName local --prefix milled/opentopography
 
 # Step 4: Build a release graph for the provider
-glcon release --cfgPath configs --cfgName local --prefix summoned/opentopography
+gleaner release --cfgPath configs --cfgName local --prefix summoned/opentopography
 ```
 
 ### Example 2: Prune and Reload a Source
@@ -346,13 +346,13 @@ When a data source has been updated and you want to sync the triplestore:
 ```bash
 # Prune removes graphs that no longer have corresponding objects in S3,
 # and adds any new objects that appeared since the last sync.
-glcon prune --cfg myconfig.yaml --prefix summoned/amgeo
+gleaner prune --cfg myconfig.yaml --prefix summoned/amgeo
 
 # If you want a clean reload instead, drain + re-harvest:
-glcon drain --cfg myconfig.yaml --prefix summoned/amgeo
-glcon summon --cfg myconfig.yaml
-glcon mill --cfg myconfig.yaml
-glcon prefix --cfg myconfig.yaml --prefix milled/amgeo
+gleaner drain --cfg myconfig.yaml --prefix summoned/amgeo
+gleaner summon --cfg myconfig.yaml
+gleaner mill --cfg myconfig.yaml
+gleaner prefix --cfg myconfig.yaml --prefix milled/amgeo
 ```
 
 ### Example 3: Using URL-Based Configuration
@@ -360,7 +360,7 @@ glcon prefix --cfg myconfig.yaml --prefix milled/amgeo
 Useful for CI/CD or shared team configurations hosted on a web server:
 
 ```bash
-glcon release \
+gleaner release \
   --cfgURL https://provisium.io/data/nabuconfig.yaml \
   --prefix summoned/dataverse \
   --endpoint localoxi
@@ -383,18 +383,18 @@ endpoints:
 
 ```bash
 # Load to the dev endpoint
-glcon prefix --cfg example.yaml --endpoint dev_blazegraph
+gleaner prefix --cfg example.yaml --endpoint dev_blazegraph
 
 # Load to production
-glcon prefix --cfg example.yaml --endpoint prod_graphdb
+gleaner prefix --cfg example.yaml --endpoint prod_graphdb
 ```
 
 ## Backward Compatibility
 
-The `nabu` binary name continues to work as an alias. All commands that worked
-with `nabu` work identically with `glcon`:
+`gleaner` is the only binary; the former `nabu` and `glcon` entry points were
+removed. All commands that worked with those tools work identically with
+`gleaner`:
 
 ```bash
-nabu prefix --cfg example.yaml        # still works
-glcon prefix --cfg example.yaml       # same thing
+gleaner prefix --cfg example.yaml
 ```

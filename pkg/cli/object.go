@@ -14,7 +14,7 @@ import (
 // checkCmd represents the check command
 var objectCmd = &cobra.Command{
 	Use:   "object",
-	Short: "nabu object command",
+	Short: "Load a single S3 object into the triplestore",
 	Long:  `Load graph object to triplestore`,
 	Run: func(cmd *cobra.Command, args []string) {
 		requireConfig()
@@ -29,7 +29,7 @@ var objectCmd = &cobra.Command{
 			}
 			os.Exit(0)
 		} else {
-			log.Fatal("must have an argument nabu object objectId")
+			log.Fatal("must have an argument: gleaner object <objectId>")
 			os.Exit(1)
 		}
 

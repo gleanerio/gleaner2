@@ -1,4 +1,4 @@
-# glcon.yaml — Run configuration for glcon (the unified gleaner+nabu tool).
+# gleaner.yaml — Run configuration for gleaner (the unified harvest+load tool).
 # Controls what operations to perform and which prefixes to load.
 # This file is SAFE TO SHARE. It contains no secrets.
 ---
@@ -13,7 +13,7 @@ gleaner:
 millers:
   graph: true        # produce RDF graphs from JSON-LD
 
-# Object store paths to load into the triplestore (used by nabu operations).
+# Object store paths to load into the triplestore (used by load operations).
 # These are S3 prefixes in the bucket. Generated from sources by `config generate`.
 objects:
   domain: us-east-1

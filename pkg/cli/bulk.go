@@ -11,7 +11,7 @@ import (
 // checkCmd represents the check command
 var bulkCmd = &cobra.Command{
 	Use:   "bulk",
-	Short: "nabu bulk command",
+	Short: "Bulk load RDF data to SPARQL endpoints",
 	Long:  `(not implemented)This will read the configs/{cfgPath}/gleaner file, and try to connect to the minio server`,
 	Run: func(cmd *cobra.Command, args []string) {
 		requireConfig()

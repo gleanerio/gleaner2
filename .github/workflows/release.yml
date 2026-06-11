@@ -1,42 +1,44 @@
-name: Release Gleaner Console (glcon) binaries
+name: Release Gleaner binaries
 
 on:
-   release:
-     types: [published]
+  release:
+    types: [created]
 
 jobs:
   releases-matrix:
-    name: Release glcon Gleaner Console Go Binary
+    name: Release Go Binary
     runs-on: ubuntu-latest
     strategy:
       matrix:
         # build and publish in parallel: linux/amd64
         goos: [linux, windows, darwin]
-        goarch: [amd64,arm64]
+        goarch: [amd64,arm64, arm ]
 #        goos: [linux]
 #        goarch: [amd64]
         exclude:
+          - goarch: arm
+            goos: darwin
           - goarch: "386"
             goos: darwin
+          - goarch: arm64
+            goos: windows
+          - goarch: arm
+            goos: linux
     steps:
       - uses: actions/checkout@v2
+ #     - name: Run tests
+ #       run: go test -v -p=1 -timeout=0 ./...
       - name: donwload schema
         run: curl https://schema.org/version/latest/schemaorg-current-https.jsonld --output assets/schemaorg-current-https.jsonld
       - name: donwload schema
         run: curl https://schema.org/version/latest/schemaorg-current-http.jsonld --output assets/schemaorg-current-http.jsonld
- #     - name: Run tests
-  #      run: go test -v -p=1  -timeout=0 ./...
-      - name: Set variables
-        run: |
-          VER=$(cat VERSION)
-          echo "VERSION=$VER" >> $GITHUB_ENV
-      - uses: wangyoucao577/go-release-action@v1.22
+      - uses: wangyoucao577/go-release-action@v1.20
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           goos: ${{ matrix.goos }}
           goarch: ${{ matrix.goarch }}
-          project_path: "./cmd/glcon"
-          binary_name: "glcon"
-          ldflags: "-s -w -X main.VERSION=${{ env.VERSION }} -X github.com/gleanerio/gleaner/pkg.VERSION=${{ env.VERSION }}"
-          extra_files: README.md docs/ configs/ scripts/  assets/
-  #         extra_files: LICENSE README.md
+          project_path: "./cmd/gleaner"
+          binary_name: "gleaner"
+          ldflags: "-s -w"
+          extra_files: README.md docs/ web/ config/ scripts/ assets/
+ #         extra_files: LICENSE README.md

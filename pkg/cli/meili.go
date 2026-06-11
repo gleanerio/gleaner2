@@ -13,7 +13,7 @@ import (
 // checkCmd represents the check command
 var meiliCmd = &cobra.Command{
 	Use:   "meili",
-	Short: "nabu meili command",
+	Short: "Load JSON-LD into MeiliSearch for indexing",
 	Long:  `This will read the configs/{cfgPath}/gleaner and connect and load JSON-LD into MeiliSearch for full text indexing`,
 	Run: func(cmd *cobra.Command, args []string) {
 		requireConfig()

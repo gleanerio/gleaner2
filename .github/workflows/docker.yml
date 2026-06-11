@@ -1,4 +1,4 @@
-name: Dockerize  Nabu
+name: Dockerize Gleaner
 # need to look at this to do it right
 # https://namiops.medium.com/golang-multi-arch-docker-image-with-github-action-b59a62c8d2bd
 on:
@@ -17,11 +17,11 @@ on:
 # https://github.com/marketplace/actions/publish-docker
 # https://github.com/docker/build-push-action
 env:
-  REGISTRY_IMAGE: nsfearthcube/nabu
+  REGISTRY_IMAGE: nsfearthcube/gleaner
 
 jobs:
   build:
-    name: Docker nabu
+    name: Docker gleaner
     runs-on: ubuntu-latest
 
     strategy:
@@ -58,13 +58,12 @@ jobs:
         run: |
           VER=$(cat VERSION)
           echo "VERSION=$VER" >> $GITHUB_ENV
-      #     - name: Run tests
-      #      run: go test -v -p=1 -timeout=0 ./...
+      - name: Run tests
+        run: go test ./pkg/config/ ./pkg/graph/
       - id: binary
         name: build
         run: |
-          go build -o nabu -ldflags "-s -w -X main.VERSION=${{ env.VERSION }} -X github.com/gleanerio/nabu/pkg.VERSION=${{ env.VERSION }}"
-        working-directory: ./cmd/nabu
+          go build -o gleaner -ldflags "-s -w -X main.VERSION=${{ env.VERSION }} -X github.com/gleanerio/nabu/pkg.VERSION=${{ env.VERSION }}" ./cmd/gleaner
         env:
           GOOS: ${{matrix.goss}}
           GOARCH: ${{matrix.goarch}}

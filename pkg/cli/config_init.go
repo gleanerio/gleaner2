@@ -36,9 +36,10 @@ template configuration files for services and sources.`,
 		}
 
 		fmt.Printf("Configuration directory initialized at: %s\n", cfgDir)
-		fmt.Println("Create your configuration files:")
-		fmt.Printf("  %s/nabu.yaml     - Nabu configuration (graph loading)\n", cfgDir)
-		fmt.Printf("  %s/gleaner.yaml  - Gleaner configuration (data harvesting)\n", cfgDir)
+		fmt.Println("Create your configuration files (see configs/template/ for annotated examples):")
+		fmt.Printf("  %s/services.yaml  - PRIVATE: MinIO keys, SPARQL credentials\n", cfgDir)
+		fmt.Printf("  %s/sources.yaml   - SHAREABLE: data sources, context maps\n", cfgDir)
+		fmt.Printf("  %s/gleaner.yaml   - SHAREABLE: run settings, object prefixes\n", cfgDir)
 	},
 }
 

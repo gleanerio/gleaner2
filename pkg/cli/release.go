@@ -12,7 +12,7 @@ import (
 // checkCmd represents the check command
 var releaseCmd = &cobra.Command{
 	Use:   "release",
-	Short: "nabu release command",
+	Short: "Create release graphs (provider RDF rolled into one file)",
 	Long:  `Generate releases for the indexes sources and also a master release`,
 	Run: func(cmd *cobra.Command, args []string) {
 		requireConfig()

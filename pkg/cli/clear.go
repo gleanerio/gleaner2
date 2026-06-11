@@ -13,7 +13,7 @@ import (
 // checkCmd represents the check command
 var ClearCmd = &cobra.Command{
 	Use:   "clear ",
-	Short: "nabu clear command",
+	Short: "Clear all graphs from the triplestore",
 	Long:  `Removes all graphs from a SPARQL endpoint `,
 	Run: func(cmd *cobra.Command, args []string) {
 		requireConfig()

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Smoke test for the glcon/nabu CLI.
+# Smoke test for the gleaner CLI.
 # Verifies that every subcommand can print help without crashing.
 # No config or services required — tests CLI wiring only.
 #
@@ -7,15 +7,15 @@
 
 set -euo pipefail
 
-BINARY="${1:-./nabu}"
+BINARY="${1:-./gleaner}"
 
 if [ ! -x "$BINARY" ]; then
     echo "Binary not found at $BINARY — building..."
-    (cd "$(dirname "$0")/.." && go build -o nabu ./cmd/nabu/) || {
+    (cd "$(dirname "$0")/.." && go build -o gleaner ./cmd/gleaner/) || {
         echo "FAIL: build failed"
         exit 1
     }
-    BINARY="$(dirname "$0")/../nabu"
+    BINARY="$(dirname "$0")/../gleaner"
 fi
 
 PASS=0
@@ -39,7 +39,7 @@ echo "=== CLI Smoke Tests ==="
 echo ""
 
 # Root help
-run_test "nabu --help" "$BINARY" --help
+run_test "gleaner --help" "$BINARY" --help
 
 # Every subcommand's --help
 run_test "prefix --help" "$BINARY" prefix --help
@@ -59,7 +59,7 @@ run_test "config init --help" "$BINARY" config init --help
 
 # Version flag (if implemented)
 if "$BINARY" --help 2>&1 | grep -q -- '--version'; then
-    run_test "nabu --version" "$BINARY" --version
+    run_test "gleaner --version" "$BINARY" --version
 fi
 
 echo ""
