@@ -29,16 +29,16 @@ validate-config:
 	./tools/validate_config.sh $(CFG_DIR)
 
 docker:
-	podman build  --tag="fils/gleaner:$(VERSION)"  --file=./build/Dockerfile .
+	podman build  --tag="fils/gleaner2:$(VERSION)"  --file=./build/Dockerfile .
 
 dockerpush:
-	podman push localhost/fils/gleaner:$(VERSION) fils/gleaner:$(VERSION)
-	podman push localhost/fils/gleaner:$(VERSION) fils/gleaner:latest
+	podman push localhost/fils/gleaner2:$(VERSION) fils/gleaner2:$(VERSION)
+	podman push localhost/fils/gleaner2:$(VERSION) fils/gleaner2:latest
 
 publish:
-	docker tag fils/gleaner:$(VERSION) fils/gleaner:latest
-	docker push fils/gleaner:$(VERSION) ; \
-	docker push fils/gleaner:latest
+	docker tag fils/gleaner2:$(VERSION) fils/gleaner2:latest
+	docker push fils/gleaner2:$(VERSION) ; \
+	docker push fils/gleaner2:latest
 
 releases: gleaner-release docker dockerpush publish
 
