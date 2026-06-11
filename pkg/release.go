@@ -1,9 +1,9 @@
 package pkg
 
 import (
-	"github.com/gleanerio/nabu/internal/common"
-	"github.com/gleanerio/nabu/pkg/storage"
-	"github.com/gleanerio/nabu/internal/services/releases"
+	"github.com/gleanerio/gleaner2/internal/common"
+	"github.com/gleanerio/gleaner2/pkg/storage"
+	"github.com/gleanerio/gleaner2/internal/services/releases"
 	log "github.com/sirupsen/logrus"
 
 	"github.com/spf13/viper"

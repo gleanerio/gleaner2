@@ -8,10 +8,10 @@ import (
 	"net/url"
 	"strings"
 
-	configTypes "github.com/gleanerio/nabu/pkg/config"
+	configTypes "github.com/gleanerio/gleaner2/pkg/config"
 
-	"github.com/gleanerio/nabu/internal/common"
-	"github.com/gleanerio/nabu/internal/millers/graph"
+	"github.com/gleanerio/gleaner2/internal/common"
+	"github.com/gleanerio/gleaner2/internal/millers/graph"
 	"github.com/minio/minio-go/v7"
 	"github.com/spf13/viper"
 )

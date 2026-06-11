@@ -3,7 +3,7 @@ package buckets
 import (
 	"context"
 	"fmt"
-	"github.com/gleanerio/nabu/internal/common"
+	"github.com/gleanerio/gleaner2/internal/common"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 

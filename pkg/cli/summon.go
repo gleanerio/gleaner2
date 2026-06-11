@@ -1,7 +1,7 @@
 package cli
 
 import (
-	"github.com/gleanerio/nabu/internal/summoner"
+	"github.com/gleanerio/gleaner2/internal/summoner"
 
 	"github.com/spf13/cobra"
 )

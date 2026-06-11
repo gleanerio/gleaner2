@@ -1,8 +1,8 @@
 package cli
 
 import (
-	"github.com/gleanerio/nabu/internal/sparql"
-	"github.com/gleanerio/nabu/pkg"
+	"github.com/gleanerio/gleaner2/internal/sparql"
+	"github.com/gleanerio/gleaner2/pkg"
 	log "github.com/sirupsen/logrus"
 	"os"
 

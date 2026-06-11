@@ -2,8 +2,8 @@ package acquire
 
 import (
 	"fmt"
-	"github.com/gleanerio/nabu/internal/common"
-	configTypes "github.com/gleanerio/nabu/pkg/config"
+	"github.com/gleanerio/gleaner2/internal/common"
+	configTypes "github.com/gleanerio/gleaner2/pkg/config"
 	"github.com/minio/minio-go/v7"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"

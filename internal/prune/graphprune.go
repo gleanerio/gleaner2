@@ -3,11 +3,11 @@ package prune
 import (
 	"fmt"
 
-	"github.com/gleanerio/nabu/internal/sparql"
-	"github.com/gleanerio/nabu/pkg/graph"
-	"github.com/gleanerio/nabu/pkg/storage"
-	"github.com/gleanerio/nabu/internal/objects"
-	"github.com/gleanerio/nabu/pkg/config"
+	"github.com/gleanerio/gleaner2/internal/sparql"
+	"github.com/gleanerio/gleaner2/pkg/graph"
+	"github.com/gleanerio/gleaner2/pkg/storage"
+	"github.com/gleanerio/gleaner2/internal/objects"
+	"github.com/gleanerio/gleaner2/pkg/config"
 	"github.com/minio/minio-go/v7"
 	"github.com/schollz/progressbar/v3"
 	log "github.com/sirupsen/logrus"

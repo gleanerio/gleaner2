@@ -2,7 +2,7 @@ package summoner
 
 import (
 	"fmt"
-	"github.com/gleanerio/nabu/internal/common"
+	"github.com/gleanerio/gleaner2/internal/common"
 	"github.com/minio/minio-go/v7"
 	log "github.com/sirupsen/logrus"
 	"os"
@@ -10,7 +10,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/gleanerio/nabu/internal/summoner/acquire"
+	"github.com/gleanerio/gleaner2/internal/summoner/acquire"
 	"github.com/spf13/viper"
 )
 

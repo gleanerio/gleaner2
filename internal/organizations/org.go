@@ -4,12 +4,12 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	configTypes "github.com/gleanerio/nabu/pkg/config"
+	configTypes "github.com/gleanerio/gleaner2/pkg/config"
 	log "github.com/sirupsen/logrus"
 	"text/template"
 
-	"github.com/gleanerio/nabu/internal/common"
-	"github.com/gleanerio/nabu/internal/objects"
+	"github.com/gleanerio/gleaner2/internal/common"
+	"github.com/gleanerio/gleaner2/internal/objects"
 
 	"github.com/minio/minio-go/v7"
 	"github.com/spf13/viper"

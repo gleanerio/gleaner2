@@ -242,7 +242,7 @@ gleaner bulk --cfg example.yaml
 
 Creates release graphs: the entire set of RDF objects for a provider rolled into
 one file as N-Quads, with named graphs following the URN pattern defined in
-[ADR 0001-URN-decision](https://github.com/gleanerio/nabu/blob/dev/decisions/0001-URN-decision.md).
+[ADR 0001-URN-decision](https://github.com/gleanerio/gleaner2/blob/master/decisions/0001-URN-decision.md).
 
 ```bash
 # Release for a specific source

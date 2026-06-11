@@ -9,9 +9,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/gleanerio/nabu/internal/objects"
-	"github.com/gleanerio/nabu/pkg/storage"
-	"github.com/gleanerio/nabu/pkg/config"
+	"github.com/gleanerio/gleaner2/internal/objects"
+	"github.com/gleanerio/gleaner2/pkg/storage"
+	"github.com/gleanerio/gleaner2/pkg/config"
 	"github.com/spf13/viper"
 
 	"github.com/minio/minio-go/v7"

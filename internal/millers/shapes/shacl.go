@@ -3,7 +3,7 @@ package shapes
 import (
 	"bytes"
 	"fmt"
-	configTypes "github.com/gleanerio/nabu/pkg/config"
+	configTypes "github.com/gleanerio/gleaner2/pkg/config"
 	log "github.com/sirupsen/logrus"
 	"io/ioutil"
 	"net/http"
@@ -11,8 +11,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/gleanerio/nabu/internal/common"
-	"github.com/gleanerio/nabu/internal/millers/graph"
+	"github.com/gleanerio/gleaner2/internal/common"
+	"github.com/gleanerio/gleaner2/internal/millers/graph"
 
 	"github.com/knakk/rdf"
 	minio "github.com/minio/minio-go/v7"

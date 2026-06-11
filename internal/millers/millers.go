@@ -5,8 +5,8 @@ import (
 	log "github.com/sirupsen/logrus"
 	"time"
 
-	"github.com/gleanerio/nabu/pkg/config"
-	"github.com/gleanerio/nabu/internal/millers/graph"
+	"github.com/gleanerio/gleaner2/pkg/config"
+	"github.com/gleanerio/gleaner2/internal/millers/graph"
 	"github.com/minio/minio-go/v7"
 	"github.com/spf13/viper"
 )

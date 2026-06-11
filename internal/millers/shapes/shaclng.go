@@ -3,13 +3,13 @@ package shapes
 import (
 	"context"
 	"fmt"
-	configTypes "github.com/gleanerio/nabu/pkg/config"
+	configTypes "github.com/gleanerio/gleaner2/pkg/config"
 	"github.com/gosuri/uiprogress"
 	log "github.com/sirupsen/logrus"
 	"strings"
 	"sync"
 
-	"github.com/gleanerio/nabu/internal/common"
+	"github.com/gleanerio/gleaner2/internal/common"
 	minio "github.com/minio/minio-go/v7"
 	"github.com/spf13/viper"
 )

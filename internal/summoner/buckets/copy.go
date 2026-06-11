@@ -3,7 +3,7 @@ package buckets
 import (
 	"context"
 	"fmt"
-	"github.com/gleanerio/nabu/internal/common"
+	"github.com/gleanerio/gleaner2/internal/common"
 	"github.com/spf13/viper"
 
 	minio "github.com/minio/minio-go/v7"

@@ -1,16 +1,16 @@
 package acquire
 
 import (
-	"github.com/gleanerio/nabu/internal/common"
+	"github.com/gleanerio/gleaner2/internal/common"
 	log "github.com/sirupsen/logrus"
 	"strings"
 	"time"
 
-	configTypes "github.com/gleanerio/nabu/pkg/config"
+	configTypes "github.com/gleanerio/gleaner2/pkg/config"
 
 	"github.com/temoto/robotstxt"
 
-	"github.com/gleanerio/nabu/internal/summoner/sitemaps"
+	"github.com/gleanerio/gleaner2/internal/summoner/sitemaps"
 	"github.com/minio/minio-go/v7"
 	"github.com/spf13/viper"
 )

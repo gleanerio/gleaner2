@@ -3,7 +3,7 @@ package sparql
 import (
 	"bytes"
 	"fmt"
-	"github.com/gleanerio/nabu/pkg/config"
+	"github.com/gleanerio/gleaner2/pkg/config"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"io/ioutil"

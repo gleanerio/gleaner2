@@ -19,8 +19,8 @@ import (
 	"github.com/piprate/json-gold/ld"
 	"github.com/spf13/viper"
 
-	"github.com/gleanerio/nabu/pkg/graph"
-	"github.com/gleanerio/nabu/pkg/storage"
+	"github.com/gleanerio/gleaner2/pkg/graph"
+	"github.com/gleanerio/gleaner2/pkg/storage"
 )
 
 // JLDProc delegates to pkg/graph.JLDProc for JSON-LD processor creation

@@ -7,11 +7,11 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/gleanerio/nabu/pkg/config"
+	"github.com/gleanerio/gleaner2/pkg/config"
 
-	"github.com/gleanerio/nabu/pkg/graph"
+	"github.com/gleanerio/gleaner2/pkg/graph"
 
-	"github.com/gleanerio/nabu/pkg/storage"
+	"github.com/gleanerio/gleaner2/pkg/storage"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 

@@ -3,7 +3,7 @@ package acquire
 import (
 	"context"
 	"github.com/chromedp/chromedp"
-	"github.com/gleanerio/nabu/internal/common"
+	"github.com/gleanerio/gleaner2/internal/common"
 	"github.com/mafredri/cdp"
 	"github.com/mafredri/cdp/devtool"
 	"github.com/mafredri/cdp/protocol/target"

@@ -11,7 +11,7 @@ There are four implementations... so you can see if one might be a little quirky
 import (
 	"errors"
 	"fmt"
-	"github.com/gleanerio/nabu/pkg/config"
+	"github.com/gleanerio/gleaner2/pkg/config"
 	"github.com/ohler55/ojg/jp"
 	"github.com/ohler55/ojg/oj"
 	log "github.com/sirupsen/logrus"

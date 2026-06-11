@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/gleanerio/nabu/internal/common"
-	"github.com/gleanerio/nabu/pkg/cli"
+	"github.com/gleanerio/gleaner2/internal/common"
+	"github.com/gleanerio/gleaner2/pkg/cli"
 )
 
 func init() {

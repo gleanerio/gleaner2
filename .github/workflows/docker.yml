@@ -63,7 +63,7 @@ jobs:
       - id: binary
         name: build
         run: |
-          go build -o gleaner -ldflags "-s -w -X main.VERSION=${{ env.VERSION }} -X github.com/gleanerio/nabu/pkg.VERSION=${{ env.VERSION }}" ./cmd/gleaner
+          go build -o gleaner -ldflags "-s -w -X main.VERSION=${{ env.VERSION }} -X github.com/gleanerio/gleaner2/pkg.VERSION=${{ env.VERSION }}" ./cmd/gleaner
         env:
           GOOS: ${{matrix.goss}}
           GOARCH: ${{matrix.goarch}}

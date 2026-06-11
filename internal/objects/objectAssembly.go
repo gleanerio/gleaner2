@@ -2,7 +2,7 @@ package objects
 
 import (
 	"context"
-	"github.com/gleanerio/nabu/pkg/config"
+	"github.com/gleanerio/gleaner2/pkg/config"
 	"github.com/schollz/progressbar/v3"
 	log "github.com/sirupsen/logrus"
 

@@ -2,16 +2,16 @@ package objects
 
 import (
 	"bufio"
-	"github.com/gleanerio/nabu/pkg/config"
+	"github.com/gleanerio/gleaner2/pkg/config"
 	"mime"
 	"path/filepath"
 	"strings"
 
 	log "github.com/sirupsen/logrus"
 
-	"github.com/gleanerio/nabu/internal/sparql"
-	"github.com/gleanerio/nabu/pkg/graph"
-	"github.com/gleanerio/nabu/pkg/storage"
+	"github.com/gleanerio/gleaner2/internal/sparql"
+	"github.com/gleanerio/gleaner2/pkg/graph"
+	"github.com/gleanerio/gleaner2/pkg/storage"
 	"github.com/minio/minio-go/v7"
 	"github.com/spf13/viper"
 )

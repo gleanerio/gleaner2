@@ -1,7 +1,7 @@
 package acquire
 
 import (
-	"github.com/gleanerio/nabu/pkg/config"
+	"github.com/gleanerio/gleaner2/pkg/config"
 	"github.com/spf13/viper"
 	"github.com/stretchr/testify/assert"
 	"os"

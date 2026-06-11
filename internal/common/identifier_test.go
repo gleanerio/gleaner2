@@ -2,7 +2,7 @@ package common
 
 import (
 	"fmt"
-	configTypes "github.com/gleanerio/nabu/pkg/config"
+	configTypes "github.com/gleanerio/gleaner2/pkg/config"
 	"os"
 	"path/filepath"
 )

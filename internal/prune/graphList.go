@@ -3,8 +3,8 @@ package prune
 import (
 	"bytes"
 	"fmt"
-	"github.com/gleanerio/nabu/pkg/graph"
-	"github.com/gleanerio/nabu/pkg/config"
+	"github.com/gleanerio/gleaner2/pkg/graph"
+	"github.com/gleanerio/gleaner2/pkg/config"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"github.com/tidwall/gjson"

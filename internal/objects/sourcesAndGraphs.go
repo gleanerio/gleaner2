@@ -3,7 +3,7 @@ package objects
 import (
 	log "github.com/sirupsen/logrus"
 
-	configTypes "github.com/gleanerio/nabu/pkg/config"
+	configTypes "github.com/gleanerio/gleaner2/pkg/config"
 	"github.com/spf13/viper"
 )
 

@@ -1,4 +1,4 @@
-module github.com/gleanerio/nabu
+module github.com/gleanerio/gleaner2
 
 go 1.19
 
